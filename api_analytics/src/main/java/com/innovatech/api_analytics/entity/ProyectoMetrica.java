@@ -1,41 +1,33 @@
 package com.innovatech.api_analytics.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Getter
-@Setter
 @Table(name = "metricas_proyectos")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ProyectoMetrica {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @Column(nullable = false)
+    @Id // 🔥 ESTE ES EL PASO CRUCIAL: El ID de Proyectos funciona como nuestra Clave Primaria local. Sin @GeneratedValue.
+    @Column(name = "proyecto_id")
     private Long proyectoId;
 
-    @Column(nullable = false)
     private String nombreProyecto;
-
-    private Integer progreso;
-
-    @Column(length = 50)
+    private Double progreso;
     private String estado;
+    private LocalDateTime javaUltimaActualizacion; // (O el nombre de tu atributo)
 
-    // Se asigna automáticamente al insertar
-    @Column(updatable = false)
-    private LocalDateTime fechaRegistro;
-
-
-    private LocalDateTime ultimaActualizacion;
-
-    @PrePersist
-    protected void onCreate() {
-        this.fechaRegistro = LocalDateTime.now();
-        this.ultimaActualizacion = LocalDateTime.now();
-    }
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "proyecto_usuarios_analytics",
+            joinColumns = @JoinColumn(name = "proyecto_id") // 🔥 Enlaza directamente al @Id de arriba
+    )
+    @Column(name = "usuario_id")
+    private Set<Long> usuarioIds = new HashSet<>();
 }
