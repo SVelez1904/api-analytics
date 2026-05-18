@@ -14,9 +14,9 @@ import java.util.Map;
 public class AnaliticaService {
 
     private final ProyectoMetricaRepository repository;
-    private final RestTemplate restTemplate; // Se inyecta automáticamente desde tu RestClientConfig externo
+    private final RestTemplate restTemplate; // Se inyecta automáticamente desde RestClientConfig externo
 
-    // --- 1. ENDPOINT EXISTENTE: ESTADÍSTICAS GLOBALES DEL DASHBOARD ---
+    // --- 1. ENDPOINT: ESTADÍSTICAS GLOBALES DEL DASHBOARD ---
     public Map<String, Object> getDashboardStats() {
         Map<String, Object> stats = new HashMap<>();
 
@@ -43,7 +43,7 @@ public class AnaliticaService {
         // A. Obtener pares de [ID_USUARIO, CANTIDAD_PROYECTOS] de la DB local
         List<Object[]> resultadosRaw = repository.countProyectosPorUsuario();
 
-        // Mapeamos a una estructura JSON clave-valor mucho más amigable para React
+        // Mapeamos a una estructura JSON clave-valor para coordinar con el front
         List<Map<String, Object>> proyectosPorUsuario = resultadosRaw.stream().map(row -> {
             Map<String, Object> userStat = new HashMap<>();
             userStat.put("usuarioId", row[0]);

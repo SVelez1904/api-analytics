@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface ProyectoMetricaRepository extends JpaRepository<ProyectoMetrica, Long> {
 
-    // 🔥 SOLUCIÓN: Comentamos este método que busca una propiedad inexistente
+
     // List<ProyectoMetrica> findByProyectoIdOrderByFechaRegistroAsc(Long proyectoId);
 
     // Buscador clave para la lógica de Upsert en el Consumer de Kafka

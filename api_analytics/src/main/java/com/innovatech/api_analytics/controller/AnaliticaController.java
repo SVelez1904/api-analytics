@@ -21,7 +21,7 @@ public class AnaliticaController {
         return ResponseEntity.ok(analyticsService.getDashboardStats());
     }
 
-    // 🔥 NUEVO ENDPOINT: Para ver la distribución del personal asignado
+    // ENDPOINT: Para ver la distribución del personal asignado
     @GetMapping("/workload")
     public ResponseEntity<Map<String, Object>> getWorkload() {
         try {

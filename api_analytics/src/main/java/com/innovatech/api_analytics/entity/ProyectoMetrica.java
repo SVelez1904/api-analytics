@@ -14,19 +14,19 @@ import java.util.Set;
 @Builder
 public class ProyectoMetrica {
 
-    @Id // 🔥 ESTE ES EL PASO CRUCIAL: El ID de Proyectos funciona como nuestra Clave Primaria local. Sin @GeneratedValue.
+    @Id
     @Column(name = "proyecto_id")
     private Long proyectoId;
 
     private String nombreProyecto;
     private Double progreso;
     private String estado;
-    private LocalDateTime javaUltimaActualizacion; // (O el nombre de tu atributo)
+    private LocalDateTime javaUltimaActualizacion;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "proyecto_usuarios_analytics",
-            joinColumns = @JoinColumn(name = "proyecto_id") // 🔥 Enlaza directamente al @Id de arriba
+            joinColumns = @JoinColumn(name = "proyecto_id")
     )
     @Column(name = "usuario_id")
     private Set<Long> usuarioIds = new HashSet<>();
